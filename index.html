@@ -23,8 +23,21 @@ nav a.on,.btn.primary{background:var(--accent);border-color:var(--accent);color:
 nav a.on:hover,.btn.primary:hover{color:var(--bg);filter:brightness(1.08)}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 8px}
 .btn{padding:10px 18px;font-size:15px}
-html{scroll-padding-top:72px}
-@media (max-width:560px){.bar{gap:8px}nav{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}nav a{padding:7px 4px;font-size:12.5px;text-align:center;white-space:nowrap}html{scroll-padding-top:104px}}
+html{scroll-padding-top:120px}
+.months{max-width:1040px;margin:0 auto;padding:0 16px 10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px}
+.months b{color:var(--muted);font-weight:600;margin-right:4px}
+.months a{padding:3px 10px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--fg);text-decoration:none;font-weight:600;font-variant-numeric:tabular-nums}
+.months a:hover{border-color:var(--accent);color:var(--accent)}
+.months a.on{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.months a.all{border-style:dashed;color:var(--muted)}
+.mcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.mcard{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;color:var(--fg);text-decoration:none;transition:border-color .15s,transform .15s}
+.mcard:hover{border-color:var(--accent);transform:translateY(-2px)}
+.mcard .m{font-size:20px;font-weight:800}.mcard .d{color:var(--muted);font-size:13px;margin-bottom:8px}
+.mcard .go{color:var(--accent);font-weight:700;font-size:13px;margin-top:10px}
+.mcard .latest{font-size:11px;font-weight:700;color:var(--bg);background:var(--accent);padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:middle}
+.pager{display:flex;justify-content:space-between;gap:10px;margin:0 0 20px}
+@media (max-width:560px){.bar{gap:8px}nav{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}nav a{padding:7px 4px;font-size:12.5px;text-align:center;white-space:nowrap}html{scroll-padding-top:150px}}
 a{color:var(--accent)}
 h1{font-size:28px;line-height:1.3;margin:0 0 8px}h2{font-size:19px;margin:40px 0 12px}
 .sub{color:var(--muted);margin:0 0 24px}
@@ -46,12 +59,12 @@ tr:last-child td{border-bottom:0}
 ul.changes{padding-left:20px}
 footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
 </style></head><body>
-<header><div class="bar"><a class="brand" href="index.html">기술 병목 기록</a><nav><a href="index.html" class="on">이번 달 병목</a><a href="index.html#record">적중 기록</a><a href="index.html#archive">월별 판정</a><a href="method.html">판정 방법</a></nav></div></header>
+<header><div class="bar"><a class="brand" href="index.html">기술 병목 기록</a><nav><a href="index.html" class="on">이번 달 병목</a><a href="index.html#record">적중 기록</a><a href="verdicts/index.html">월별 판정</a><a href="method.html">판정 방법</a></nav></div><div class="months"><b>월별 판정</b><a href="verdicts/2026-11.html">2026-11</a><a href="verdicts/2026-10.html">2026-10</a><a class="all" href="verdicts/index.html">전체 2개월</a></div></header>
 <main>
 <h1>기술 병목 판정 기록</h1>
 <p class="sub">공급계약 공시·특허·논문으로 실적에 반영되기 전의 기술 병목을 찾고, 매달 판정과 그 이후 결과를 그대로 남깁니다.</p>
 <div class="actions"><a class="btn primary" href="#record">적중 기록 보기</a><a class="btn" href="verdicts/2026-11.html">2026-11 전체 판정</a>
-<a class="btn" href="method.html">판정 방법</a></div>
+<a class="btn" href="verdicts/index.html">지난 판정 모아보기</a></div>
 <h2>2026-11 현재 병목</h2>
 <div class="cards"><div class="card"><b>변압기·리액터</b><span>전력망 · 공급사 7곳 · 계약 2년 39,111억</span></div><div class="card"><b>가스터빈·복합화력·보일러</b><span>발전·신재생 · 공급사 9곳 · 계약 2년 36,138억</span></div><div class="card"><b>송전·HVDC·해저케이블</b><span>전력망 · 공급사 11곳 · 계약 2년 30,686억</span></div><div class="card"><b>데이터센터 전원(UPS·BBU·자가발전)</b><span>데이터센터 · 공급사 7곳 · 계약 2년 16,809억</span></div><div class="card"><b>유기 패키지 기판(FC-BGA·인터포저)</b><span>AI반도체 · 공급사 4곳 · 계약 2년 6,563억</span></div></div>
 <p class="fine">전체 35개 노드: 병목 5 · 준후보 2 · 수요 붐·공급 분산 4 · 관찰 3 · 이른 후보 6 · 병목 아님 15 · <a href="verdicts/2026-11.html">전체 판정 보기</a></p>
@@ -60,5 +73,5 @@ footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:v
 <div class="wrap"><table><thead><tr><th>판정일</th><th>기간</th><th>상태</th><th>병목</th><th>준후보</th><th>관찰</th><th>이른 후보</th><th>병목 아님</th><th>병목 − 병목 아님</th></tr></thead><tbody><tr><td>2026-10-12</td><td>1개월</td><td>진행 중</td><td class="num neg">-0.3%</td><td class="num pos">+1.5%</td><td class="num pos">+0.5%</td><td class="num pos">+6.8%</td><td class="num neg">-1.8%</td><td class="num pos">+1.5%</td></tr></tbody></table></div>
 <h2>병목으로 판정한 노드의 이후 성과</h2>
 <div class="wrap"><table><thead><tr><th>판정일</th><th>노드</th><th>기간</th><th>바스켓 종목 수</th><th>바스켓 수익률</th><th>초과수익</th><th>상태</th></tr></thead><tbody><tr><td>2026-10-12</td><td>송전·HVDC·해저케이블</td><td>1개월</td><td class='num'>12</td><td class="num pos">+0.8%</td><td class="num pos">+3.3%</td><td>진행 중</td></tr><tr><td>2026-10-12</td><td>변압기·리액터</td><td>1개월</td><td class='num'>7</td><td class="num neg">-0.5%</td><td class="num pos">+1.9%</td><td>진행 중</td></tr><tr><td>2026-10-12</td><td>데이터센터 전원(UPS·BBU·자가발전)</td><td>1개월</td><td class='num'>6</td><td class="num neg">-1.2%</td><td class="num pos">+1.3%</td><td>진행 중</td></tr><tr><td>2026-10-12</td><td>가스터빈·복합화력·보일러</td><td>1개월</td><td class='num'>8</td><td class="num neg">-2.6%</td><td class="num neg">-0.2%</td><td>진행 중</td></tr><tr><td>2026-10-12</td><td>유기 패키지 기판(FC-BGA·인터포저)</td><td>1개월</td><td class='num'>3</td><td class="num neg">-10.1%</td><td class="num neg">-7.6%</td><td>진행 중</td></tr></tbody></table></div>
-<h2 id="archive">월별 판정</h2><ul><li><a href="verdicts/2026-11.html">2026-11</a> — 병목 5개, 판정일 2026-11-16</li><li><a href="verdicts/2026-10.html">2026-10</a> — 병목 5개, 판정일 2026-10-12</li></ul>
+<h2 id="archive">월별 판정</h2><div class="mcards"><a class="mcard" href="verdicts/2026-11.html"><div class="m">2026-11<span class="latest">최신</span></div><div class="d">판정일 2026-11-16 · 지난달 대비 변화 1건</div><div>병목 5개: 변압기·리액터, 가스터빈·복합화력·보일러, 송전·HVDC·해저케이블, 데이터센터 전원(UPS·BBU·자가발전), 유기 패키지 기판(FC-BGA·인터포저)</div><div class="go">전체 판정 보기 →</div></a><a class="mcard" href="verdicts/2026-10.html"><div class="m">2026-10</div><div class="d">판정일 2026-10-12 · 첫 판정</div><div>병목 5개: 변압기·리액터, 송전·HVDC·해저케이블, 가스터빈·복합화력·보일러, 데이터센터 전원(UPS·BBU·자가발전), 유기 패키지 기판(FC-BGA·인터포저)</div><div class="go">전체 판정 보기 →</div></a></div>
 <footer>이 사이트는 공개 데이터(DART 공급계약 공시, 특허, 논문)로 만든 개인 리서치 기록이며 특정 종목의 매수·매도를 권유하지 않습니다. 기업 이름은 공시된 계약 사실을 근거로 표시할 뿐입니다.</footer></main></body></html>

@@ -1,0 +1,65 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>월별 판정</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--muted:#6b6a65;--line:#e4e1d8;--card:#ffffff;--accent:#9a3412;
+--hot:#b91c1c;--hot-bg:#fde8e8;--warm:#a16207;--warm-bg:#fdf3d7;--cool:#1d4ed8;--cool-bg:#e3ecfd;--dim:#8a8984;--pos:#15803d;--neg:#b91c1c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161614;--fg:#ecebe6;--muted:#9c9a93;--line:#2e2d29;--card:#1e1e1b;
+--accent:#fb923c;--hot:#fca5a5;--hot-bg:#3b1414;--warm:#fcd34d;--warm-bg:#352a0e;--cool:#93c5fd;--cool-bg:#132340;--dim:#77756f;--pos:#4ade80;--neg:#f87171}}
+:root[data-theme="dark"]{--bg:#161614;--fg:#ecebe6;--muted:#9c9a93;--line:#2e2d29;--card:#1e1e1b;
+--accent:#fb923c;--hot:#fca5a5;--hot-bg:#3b1414;--warm:#fcd34d;--warm-bg:#352a0e;--cool:#93c5fd;--cool-bg:#132340;--dim:#77756f;--pos:#4ade80;--neg:#f87171}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.65 "Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+main{max-width:1040px;margin:0 auto;padding:32px 16px 64px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);
+backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{max-width:1040px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:16px;color:var(--fg);text-decoration:none;display:flex;align-items:center;gap:8px;margin-right:auto}
+.brand::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--hot-bg)}
+nav{display:flex;gap:8px;flex-wrap:wrap;max-width:100%}
+nav a,.btn{flex:none;padding:7px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card);
+color:var(--fg);font-size:14px;font-weight:600;text-decoration:none;transition:border-color .15s,color .15s,background .15s}
+nav a:hover,.btn:hover{border-color:var(--accent);color:var(--accent)}
+nav a.on,.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+nav a.on:hover,.btn.primary:hover{color:var(--bg);filter:brightness(1.08)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 8px}
+.btn{padding:10px 18px;font-size:15px}
+html{scroll-padding-top:120px}
+.months{max-width:1040px;margin:0 auto;padding:0 16px 10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px}
+.months b{color:var(--muted);font-weight:600;margin-right:4px}
+.months a{padding:3px 10px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--fg);text-decoration:none;font-weight:600;font-variant-numeric:tabular-nums}
+.months a:hover{border-color:var(--accent);color:var(--accent)}
+.months a.on{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.months a.all{border-style:dashed;color:var(--muted)}
+.mcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.mcard{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;color:var(--fg);text-decoration:none;transition:border-color .15s,transform .15s}
+.mcard:hover{border-color:var(--accent);transform:translateY(-2px)}
+.mcard .m{font-size:20px;font-weight:800}.mcard .d{color:var(--muted);font-size:13px;margin-bottom:8px}
+.mcard .go{color:var(--accent);font-weight:700;font-size:13px;margin-top:10px}
+.mcard .latest{font-size:11px;font-weight:700;color:var(--bg);background:var(--accent);padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:middle}
+.pager{display:flex;justify-content:space-between;gap:10px;margin:0 0 20px}
+@media (max-width:560px){.bar{gap:8px}nav{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}nav a{padding:7px 4px;font-size:12.5px;text-align:center;white-space:nowrap}html{scroll-padding-top:150px}}
+a{color:var(--accent)}
+h1{font-size:28px;line-height:1.3;margin:0 0 8px}h2{font-size:19px;margin:40px 0 12px}
+.sub{color:var(--muted);margin:0 0 24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.card b{display:block;font-size:16px}.card span{color:var(--muted);font-size:13px}
+.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{color:var(--muted);font-weight:600;background:var(--bg)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}td.wide{white-space:normal;min-width:180px}
+tr:last-child td{border-bottom:0}
+.tag{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;font-weight:600}
+.tag.hot{color:var(--hot);background:var(--hot-bg)}.tag.warm{color:var(--warm);background:var(--warm-bg)}
+.tag.cool{color:var(--cool);background:var(--cool-bg)}.tag.dim{color:var(--dim)}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
+.note{background:var(--card);border-left:3px solid var(--accent);padding:12px 16px;border-radius:0 10px 10px 0}
+.fine{color:var(--muted);font-size:13px}
+ul.changes{padding-left:20px}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+</style></head><body>
+<header><div class="bar"><a class="brand" href="../index.html">기술 병목 기록</a><nav><a href="../index.html">이번 달 병목</a><a href="../index.html#record">적중 기록</a><a href="../verdicts/index.html" class="on">월별 판정</a><a href="../method.html">판정 방법</a></nav></div><div class="months"><b>월별 판정</b><a href="../verdicts/2026-11.html">2026-11</a><a href="../verdicts/2026-10.html">2026-10</a><a class="all" href="../verdicts/index.html">전체 2개월</a></div></header>
+<main>
+<h1>월별 판정</h1><p class="sub">매달 낸 판정을 고치지 않고 그대로 보관합니다. 달을 누르면 그 달의 전체 노드 판정이 열립니다.</p><div class="mcards"><a class="mcard" href="2026-11.html"><div class="m">2026-11<span class="latest">최신</span></div><div class="d">판정일 2026-11-16 · 지난달 대비 변화 1건</div><div>병목 5개: 변압기·리액터, 가스터빈·복합화력·보일러, 송전·HVDC·해저케이블, 데이터센터 전원(UPS·BBU·자가발전), 유기 패키지 기판(FC-BGA·인터포저)</div><div class="go">전체 판정 보기 →</div></a><a class="mcard" href="2026-10.html"><div class="m">2026-10</div><div class="d">판정일 2026-10-12 · 첫 판정</div><div>병목 5개: 변압기·리액터, 송전·HVDC·해저케이블, 가스터빈·복합화력·보일러, 데이터센터 전원(UPS·BBU·자가발전), 유기 패키지 기판(FC-BGA·인터포저)</div><div class="go">전체 판정 보기 →</div></a></div>
+<footer>이 사이트는 공개 데이터(DART 공급계약 공시, 특허, 논문)로 만든 개인 리서치 기록이며 특정 종목의 매수·매도를 권유하지 않습니다. 기업 이름은 공시된 계약 사실을 근거로 표시할 뿐입니다.</footer></main></body></html>
