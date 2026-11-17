@@ -1,0 +1,73 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>방법</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--muted:#6b6a65;--line:#e4e1d8;--card:#ffffff;--accent:#9a3412;
+--hot:#b91c1c;--hot-bg:#fde8e8;--warm:#a16207;--warm-bg:#fdf3d7;--cool:#1d4ed8;--cool-bg:#e3ecfd;--dim:#8a8984;--pos:#15803d;--neg:#b91c1c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161614;--fg:#ecebe6;--muted:#9c9a93;--line:#2e2d29;--card:#1e1e1b;
+--accent:#fb923c;--hot:#fca5a5;--hot-bg:#3b1414;--warm:#fcd34d;--warm-bg:#352a0e;--cool:#93c5fd;--cool-bg:#132340;--dim:#77756f;--pos:#4ade80;--neg:#f87171}}
+:root[data-theme="dark"]{--bg:#161614;--fg:#ecebe6;--muted:#9c9a93;--line:#2e2d29;--card:#1e1e1b;
+--accent:#fb923c;--hot:#fca5a5;--hot-bg:#3b1414;--warm:#fcd34d;--warm-bg:#352a0e;--cool:#93c5fd;--cool-bg:#132340;--dim:#77756f;--pos:#4ade80;--neg:#f87171}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.65 "Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+main{max-width:1040px;margin:0 auto;padding:32px 16px 64px}
+nav{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;margin-bottom:28px}
+nav a{color:var(--muted);text-decoration:none}nav a:hover{color:var(--accent)}
+a{color:var(--accent)}
+h1{font-size:28px;line-height:1.3;margin:0 0 8px}h2{font-size:19px;margin:40px 0 12px}
+.sub{color:var(--muted);margin:0 0 24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.card b{display:block;font-size:16px}.card span{color:var(--muted);font-size:13px}
+.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{color:var(--muted);font-weight:600;background:var(--bg)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}td.wide{white-space:normal;min-width:180px}
+tr:last-child td{border-bottom:0}
+.tag{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;font-weight:600}
+.tag.hot{color:var(--hot);background:var(--hot-bg)}.tag.warm{color:var(--warm);background:var(--warm-bg)}
+.tag.cool{color:var(--cool);background:var(--cool-bg)}.tag.dim{color:var(--dim)}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
+.note{background:var(--card);border-left:3px solid var(--accent);padding:12px 16px;border-radius:0 10px 10px 0}
+.fine{color:var(--muted);font-size:13px}
+ul.changes{padding-left:20px}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+</style></head><body><main>
+<nav><a href="index.html">기술 병목 기록</a><a href="index.html#record">적중 기록</a>
+<a href="index.html#archive">월별 판정</a><a href="method.html">방법</a></nav>
+<h1>방법</h1>
+<h2>데이터</h2>
+<ul><li>DART 단일판매·공급계약 공시 (2021년~, 상장사)</li><li>KIPRIS 국내 특허, EPO OPS 해외 특허 (중국 외 집계를 주 지표로 사용)</li>
+<li>OpenAlex 논문</li><li>월말 주가·실적 (네이버 금융, OpenDART)</li></ul>
+<p>계약은 품목명 기준으로 9개 도메인·31개 기술 노드로 분류합니다. 정비·운영 용역은 제외합니다.</p>
+<h2>노드 판정 규칙</h2><div class="wrap"><pre style="margin:0;padding:14px 16px;white-space:pre-wrap;font-size:13px">해석 리포트: 지금 무엇이 병목인가 + 주가 영향 조건을 만족하는 병목 노드 기업.
+
+노드 판정 (기술 트리 노드 단위, 최근 2년 vs 직전 2년 공급계약 + 과거 단계 이벤트의 업종 대비 초과수익)
+  수요 증가  계약 금액 1.2배 이상, 또는 최근 2년 1조 원 이상이면서 0.8배 이상(높은 수준 유지)
+  공급 집중  공급사(계약 공시 상장사) 12곳 이하
+  주가 검증  그 노드 S4 이벤트 12개월 초과수익 평균 +10% 이상(S4 없으면 S2~S5 평균, 3건 이상)
+             그리고 S2~S5 전체 평균 0% 이상
+  병목              수요 + 공급 + 주가 + 최근 계약 8건 이상
+  수요 붐·공급 분산  수요 + 주가, 공급 조건 미충족
+  준후보            수요 + 공급, 계약 8건 미만 또는 주가 증거 부족 (음수 아님)
+  병목 아님          계약 금액 0.5배 미만, 또는 주가 반응 음수(S4 평균, 또는 5건 이상 S2~S5 평균)
+  이른 후보          최근 2년 계약 3건 이하
+  관찰              그 밖
+해외 특허 표시 (EPO OPS, ops_report.py 결과. 판정은 바꾸지 않고 함께 싣는다)
+  급증  중국 외 공개 2021→2025 연평균 +20% 이상, 2025 중국 외 공개 30건 이상
+  집중  2025 중국 외 표본(30건 이상)에서 상위 3개 출원인 비중 40% 이상
+  계약 전 단계(이른 후보·관찰·준후보)이면서 급증인 노드는 &#x27;해외 특허가 먼저 움직이는 노드&#x27;로 따로 싣는다
+주가 조건 기업 = monitor.py 의 A(S4)·B(전력망·원자력 S5)·C(S2·S3 공급사 10곳 이하·흑자·PER≤50)·E(S1 계약 전) 중 병목·준후보 노드 소속</pre></div>
+<h2>적중 기록 계산</h2><div class="wrap"><pre style="margin:0;padding:14px 16px;white-space:pre-wrap;font-size:13px">공개 판정의 사후 적중 기록: 매달 낸 노드 판정이 이후 실제로 맞았는가.
+
+바스켓   판정일 기준 최근 2년 그 노드 공급계약을 공시한 상장사 전체 (interpret.node_evidence 와 같은 기준)
+진입     판정일이 속한 달의 월말 종가 (판정을 보고 월말에 샀다고 가정, event_study 의 post 와 같은 관례)
+수익률   바스켓 동일가중 단순수익률 − 전체 상장사(패널) 동일가중 단순수익률 = 초과수익
+기간     1·3·6·12개월. 패널 마지막 달이 아직 끝나지 않았으면 그 달 최신 종가로 계산하고 &#x27;진행 중&#x27; 표시
+요약     판정 분류별 평균 초과수익, 그리고 &#x27;병목 − 병목 아님&#x27; 차이 (판정이 맞았다면 양수)</pre></div>
+<h2>알려진 한계</h2>
+<ul><li>품목명 정규식 분류라 오분류가 남아 있습니다. 발견하면 다음 달에 고치고, 과거 판정 파일은 고치지 않습니다.</li>
+<li>공급사 수는 계약을 공시한 상장사만 셉니다. 비상장·해외 공급사는 빠집니다.</li>
+<li>기존 장비 증설형 병목은 특허로 잘 잡히지 않아 공급계약 신호에 더 의존합니다.</li>
+<li>과거 백테스트 수치(판정 규칙의 주가 조건)는 표본이 작아 실전 성과를 보장하지 않습니다. 실전 성과는 적중 기록만 보십시오.</li></ul>
+<footer>이 사이트는 공개 데이터(DART 공급계약 공시, 특허, 논문)로 만든 개인 리서치 기록이며 특정 종목의 매수·매도를 권유하지 않습니다. 기업 이름은 공시된 계약 사실을 근거로 표시할 뿐입니다.</footer></main></body></html>
